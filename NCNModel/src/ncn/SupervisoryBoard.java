@@ -1,5 +1,6 @@
 package ncn;
 
+import java.util.Collections;
 import java.util.List;
 
 public class SupervisoryBoard {
@@ -139,13 +140,11 @@ public class SupervisoryBoard {
   }
 
   public void setCognitiveDissonanceProbability(int cognitiveDissonance, int numOfInteractions) {
-    if (cognitiveDissonance >= (int) (COGNITIVE_DISSONANCE_ACCUMULATED_FACTOR * numOfInteractions)) {
+    if (cognitiveDissonance >= (COGNITIVE_DISSONANCE_ACCUMULATED_FACTOR * numOfInteractions)) {
       this.cognitiveDissonanceProbability += COGNITIVE_DISSONANCE_MODIFIER_INC;
     } else {
       this.cognitiveDissonanceProbability -= COGNITIVE_DISSONANCE_MODIFIER_DEC;
     }
-
-    this.cognitiveDissonanceProbability = Helper.doublePrecision(this.cognitiveDissonanceProbability);
 
     if (this.cognitiveDissonanceProbability > 1.0) {
       this.cognitiveDissonanceProbability = 1.0;
@@ -177,14 +176,15 @@ public class SupervisoryBoard {
       this.relationshipConflictProbability -= RELATIONSHIP_CONFLICT_MODIFIER_DEC;
     }
 
-    this.relationshipConflictProbability =
-        Helper.doublePrecision(this.relationshipConflictProbability);
-
     if (this.relationshipConflictProbability > 1.0) {
       this.relationshipConflictProbability = 1.0;
     } else if (this.relationshipConflictProbability < 0.0) {
       this.relationshipConflictProbability = 0.0;
     }
+  }
+
+  public void shuffleBoard() {
+    Collections.shuffle(this.boardMembers);
   }
 
   public int getRelationshipConflict() {
