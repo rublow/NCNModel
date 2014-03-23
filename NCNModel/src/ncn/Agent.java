@@ -1,5 +1,8 @@
 package ncn;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Agent {
 
   private final Gender gender;
@@ -79,10 +82,10 @@ public class Agent {
    */
   @Override
   public String toString() {
-    return "Agent " + Name + " [gender=" + gender + ", nationality=" + nationality + ", educationDegree="
-        + educationDegree + ", education=" + education + ", hasExperience=" + hasExperience
-        + ", hasForeignStudies=" + hasForeignStudies + ", hasPostGradStud=" + hasPostGradStud
-        + ", hasMBA=" + hasMBA + ", isChairman=" + isChairman + "]";
+    return "Agent " + Name + " [gender=" + gender + ", nationality=" + nationality
+        + ", educationDegree=" + educationDegree + ", education=" + education + ", hasExperience="
+        + hasExperience + ", hasForeignStudies=" + hasForeignStudies + ", hasPostGradStud="
+        + hasPostGradStud + ", hasMBA=" + hasMBA + ", isChairman=" + isChairman + "]";
   }
 
   public enum Gender {
@@ -94,12 +97,12 @@ public class Agent {
   }
 
   public enum Chars {
-    Experienced(), ForeignStudies, PostGradStud, MBA, Chairman, inExperienced, noForeignStudies, noPostGradStud, noMBA, notChairman;
-    
+    Experienced, ForeignStudies, PostGradStud, MBA, Chairman, inExperienced, noForeignStudies, noPostGradStud, noMBA, notChairman;
+
     // private Chars(boolean x) {
     // this.x = x;
     // }
-    //Experienced(true)
+    // Experienced(true)
     // public boolean getX( {
     // return x;
     // })
@@ -174,5 +177,74 @@ public class Agent {
   /**
    * @return the hasForeignStudies
    */
+
+  public static String randomNationality() {
+    String[] name =
+        {"POLISH", "ENGLISH", "US", "ITALIAN", "SPANISH", "FRENCH", "IZRAEL", "DUTCH", "GERMAN"};
+    int probability = Helper.randInt(0, 100);
+    int place = Helper.randInt(1, name.length);
+    return (probability < 95) ? name[0] : name[place-1];
+  }
+
+  public static Gender randomGender() {
+    int probability = Helper.randInt(0, 100);
+    return (probability < 80) ? Gender.MALE : Gender.FEMALE;
+  }
+
+  public static String randomName() {
+    return String.valueOf(((char) (Helper.randInt(0, 26) + 'a')));
+  }
+
+  public static int randomEducationDegree() {
+    return Helper.randInt(4, 16);
+  }
+
+  public static Education randomEducation() {
+    int probability = Helper.randInt(0, 100);
+
+    if (probability <= 25)
+      return Education.Economic;
+    else if (probability > 25 && probability < 50)
+      return Education.Technical;
+    else if (probability >= 50 && probability < 75)
+      return Education.Law;
+    return Education.Other;
+  }
+
+  public static Chars randomExperienced() {
+    int probability = Helper.randInt(0, 100);
+    return (probability < 50) ? Chars.Experienced : Chars.inExperienced;
+  }
+
+  public static Chars randomForeignStudies() {
+    int probability = Helper.randInt(0, 100);
+    return (probability < 50) ? Chars.ForeignStudies : Chars.noForeignStudies;
+  }
+
+  public static Chars randomPostGradStud() {
+    int probability = Helper.randInt(0, 100);
+    return (probability < 50) ? Chars.PostGradStud : Chars.noPostGradStud;
+  }
+
+  public static Chars randomMBA() {
+    int probability = Helper.randInt(0, 100);
+    return (probability < 50) ? Chars.MBA : Chars.noMBA;
+  }
+
+  public static Chars randomChairman() {
+    int probability = Helper.randInt(0, 100);
+    // return (probability < 50) ? Chars.MBA : Chars.noMBA;
+    return Chars.notChairman;
+  }
+
+  public static List<Agent> generateNumberOfAgents(int number) {
+    List<Agent> agents = new ArrayList<Agent>();
+    for (int i = 0; i < number; ++i) {
+      agents.add(Agent.createAgent(randomName(), randomGender(), randomNationality(),
+          randomEducationDegree(), randomEducation(), randomExperienced(), randomForeignStudies(),
+          randomPostGradStud(), randomMBA(), randomChairman()));
+    }
+    return agents;
+  }
 
 }
