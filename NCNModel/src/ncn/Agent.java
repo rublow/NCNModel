@@ -183,7 +183,7 @@ public class Agent {
         {"POLISH", "ENGLISH", "US", "ITALIAN", "SPANISH", "FRENCH", "IZRAEL", "DUTCH", "GERMAN"};
     int probability = Helper.randInt(0, 100);
     int place = Helper.randInt(1, name.length);
-    return (probability < 95) ? name[0] : name[place-1];
+    return (probability < 95) ? name[0] : name[place - 1];
   }
 
   public static Gender randomGender() {
@@ -232,18 +232,21 @@ public class Agent {
   }
 
   public static Chars randomChairman() {
-    int probability = Helper.randInt(0, 100);
+    // int probability = Helper.randInt(0, 100);
     // return (probability < 50) ? Chars.MBA : Chars.noMBA;
     return Chars.notChairman;
   }
 
   public static List<Agent> generateNumberOfAgents(int number) {
     List<Agent> agents = new ArrayList<Agent>();
-    for (int i = 0; i < number; ++i) {
+    for (int i = 0; i < number - 1; ++i) {
       agents.add(Agent.createAgent(randomName(), randomGender(), randomNationality(),
           randomEducationDegree(), randomEducation(), randomExperienced(), randomForeignStudies(),
           randomPostGradStud(), randomMBA(), randomChairman()));
     }
+    agents.add(Agent.createAgent(randomName(), randomGender(), randomNationality(),
+        randomEducationDegree(), randomEducation(), randomExperienced(), randomForeignStudies(),
+        randomPostGradStud(), randomMBA(), Chars.Chairman));
     return agents;
   }
 
