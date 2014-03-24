@@ -58,7 +58,6 @@ public class RunApp {
     double deltaRCL = board.getRelationshipConflictProbability();
     int deltaRC = board.getRelationshipConflict();
 
-    Double[] a = {deltaCDL, (double) deltaCD, deltaRCL, (double) deltaRC};
     String initial =
         new String("Initial CognitiveDissonanceProbability " + deltaCDL + "\r\n"
             + "Initial CognitiveDissonance " + deltaCD + "\r\n"
